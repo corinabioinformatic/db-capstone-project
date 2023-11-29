@@ -11,18 +11,18 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- 
 
 -- -----------------------------------------------------
--- Schema LittleLemonDB
+-- Schema meta_capstoneproject
 --
 -- Database with exercises from the Coursera course of Meta Capstone project
 -- 
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `LittleLemonDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
-USE `LittleLemonDB` ;
+CREATE SCHEMA IF NOT EXISTS `LittleLemonDb` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
+USE `LittleLemonDb` ;
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`Customers`
+-- Table `LittleLemonDb`.`Customers`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Customers` (
+CREATE TABLE IF NOT EXISTS `LittleLemonDb`.`Customers` (
   `CustomerID` VARCHAR(25) NOT NULL,
   `FirstName` VARCHAR(45) NOT NULL,
   `LastName` VARCHAR(45) NOT NULL,
@@ -33,54 +33,50 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`Bookings`
+-- Table `LittleLemonDb`.`Orders`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Bookings` (
-  `BookingID` VARCHAR(25) NOT NULL,
-  `CustomerID` VARCHAR(45) NOT NULL,
-  `TableNo` INT NOT NULL,
-  `DateBooking` DATETIME NOT NULL,
-  PRIMARY KEY (`BookingID`),
-  INDEX `fk_customers_bookings_customerid_idx` (`CustomerID` ASC) VISIBLE,
-  CONSTRAINT `fk_customers_bookings_customerid`
-    FOREIGN KEY (`CustomerID`)
-    REFERENCES `meta_capstoneproject`.`Customers` (`CustomerID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `LittleLemonDB`.`Orders`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Orders` (
+CREATE TABLE IF NOT EXISTS `LittleLemonDb`.`Orders` (
   `OrderID` VARCHAR(5) NOT NULL,
-  `BookingID` VARCHAR(45) NOT NULL,
+  `CustomerID` VARCHAR(45) NOT NULL,
   `OrderDate` DATETIME NOT NULL,
   `Quantity` INT NOT NULL,
   `TotalCost` DECIMAL NOT NULL,
   PRIMARY KEY (`OrderID`),
-  INDEX `fk_bookings_orders_bookingid_idx` (`BookingID` ASC) VISIBLE,
-  CONSTRAINT `fk_bookings_orders_bookingid`
-    FOREIGN KEY (`BookingID`)
-    REFERENCES `meta_capstoneproject`.`Bookings` (`BookingID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  INDEX `fk_customer_orders_customerid_idx` (`CustomerID` ASC) VISIBLE,
+  CONSTRAINT `fk_customer_orders_customerid`
+    FOREIGN KEY (`CustomerID`)
+    REFERENCES `meta_capstoneproject`.`Customers` (`CustomerID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`Menu`
+-- Table `LittleLemonDb`.`Bookings`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Menu` (
+CREATE TABLE IF NOT EXISTS `LittleLemonDb`.`Bookings` (
+  `BookingID` VARCHAR(25) NOT NULL,
+  `OrderID` VARCHAR(45) NOT NULL,
+  `TableNo` INT NOT NULL,
+  `DateBooking` DATETIME NOT NULL,
+  PRIMARY KEY (`BookingID`),
+  INDEX `fk_order_bookings_orderid_idx` (`OrderID` ASC) VISIBLE,
+  CONSTRAINT `fk_order_bookings_orderid`
+    FOREIGN KEY (`OrderID`)
+    REFERENCES `meta_capstoneproject`.`Orders` (`OrderID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LittleLemonDb`.`Menu`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LittleLemonDb`.`Menu` (
   `MenuID` VARCHAR(25) NOT NULL,
   `MenuName` VARCHAR(45) NOT NULL,
   `OrderID` VARCHAR(45) NOT NULL,
   `Cuisines` VARCHAR(45) NOT NULL,
-  `Starters` VARCHAR(45) NULL,
-  `Courses` VARCHAR(45) NOT NULL,
-  `Drinks` VARCHAR(45) NULL,
-  `Desserts` VARCHAR(45) NULL,
   PRIMARY KEY (`MenuID`),
   INDEX `fk_orders_menu_orderid_idx` (`OrderID` ASC) VISIBLE,
   CONSTRAINT `fk_orders_menu_orderid`
@@ -92,9 +88,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`Staff`
+-- Table `LittleLemonDb`.`Staff`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Staff` (
+CREATE TABLE IF NOT EXISTS `LittleLemonDb`.`Staff` (
   `StaffID` VARCHAR(25) NOT NULL,
   `FirstName` VARCHAR(45) NOT NULL,
   `LastName` VARCHAR(45) NOT NULL,
@@ -107,15 +103,15 @@ CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Staff` (
   CONSTRAINT `fk_orders_staff_orderid`
     FOREIGN KEY (`OrderID`)
     REFERENCES `meta_capstoneproject`.`Orders` (`OrderID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`OrderDeliveryStatus`
+-- Table `LittleLemonDb`.`OrderDeliveryStatus`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`OrderDeliveryStatus` (
+CREATE TABLE IF NOT EXISTS `LittleLemonDb`.`OrderDeliveryStatus` (
   `OrderStatusID` VARCHAR(25) NOT NULL,
   `OrderID` VARCHAR(45) NOT NULL,
   `DeliveryStatus` VARCHAR(45) NOT NULL,
@@ -125,8 +121,28 @@ CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`OrderDeliveryStatus` (
   CONSTRAINT `fk_orders_orderdeliverystatus_orderid`
     FOREIGN KEY (`OrderID`)
     REFERENCES `meta_capstoneproject`.`Orders` (`OrderID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LittleLemonDb`.`MenuItems`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LittleLemonDb`.`MenuItems` (
+  `MenuItemsID` VARCHAR(45) NOT NULL,
+  `CourseName` VARCHAR(45) NOT NULL,
+  `StarterName` VARCHAR(45) NULL,
+  `DesertName` VARCHAR(45) NULL,
+  `Drinks` VARCHAR(45) NULL,
+  `MenuID` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`MenuItemsID`),
+  INDEX `fk_menu_menuitems_menuid_idx` (`MenuID` ASC) VISIBLE,
+  CONSTRAINT `fk_menu_menuitems_menuid`
+    FOREIGN KEY (`MenuID`)
+    REFERENCES `meta_capstoneproject`.`Menu` (`MenuID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
