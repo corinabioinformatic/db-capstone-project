@@ -98,12 +98,14 @@ DELIMITER //
 
 CREATE PROCEDURE AddValidBooking(IN inputbookingdate DATETIME, IN inputtablenumber INT, OUT statusofproced VARCHAR(64))
 BEGIN
+	DECLARE hereyourcustomerinputidtemp INT DEFAULT 5;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;  -- rollback any error in the transaction
         RESIGNAL;
     END;
 	START TRANSACTION;
+		
 		IF (
 			SELECT TableNo FROM Bookings 
 			WHERE DateBooking = inputbookingdate 
@@ -112,9 +114,11 @@ BEGIN
 			SET statusofproced = CONCAT('this table ',inputtablenumber,' is NOT available for your date');
 			ROLLBACK;
 		ELSE
+			
+			SET hereyourcustomerinputidtemp = 5 ; -- just for this example
 			SET statusofproced = CONCAT('table ',inputtablenumber, ' is available for your date');
-            INSERT INTO Bookings(TableNo, DateBooking)
-			VALUES(inputtablenumber,inputbookingdate);
+            INSERT INTO Bookings(CustomerID,TableNo, DateBooking)
+			VALUES(hereyourcustomerinputidtemp, inputtablenumber,inputbookingdate);
 			COMMIT;
 	END IF;
     
@@ -128,3 +132,6 @@ SELECT @statusbooking;
    
 CALL AddValidBooking('2022-10-11',2, @statusbooking);
 SELECT @statusbooking;
+
+
+ 
