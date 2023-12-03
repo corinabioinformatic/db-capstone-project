@@ -60,10 +60,7 @@ PREPARE GetOrderDetail FROM 'SELECT OrderID, Quantity, TotalCost FROM Orders WHE
 SET @id = 1;
 EXECUTE GetOrderDetail USING @id;
 
-SET @id = 'C001';
-EXECUTE GetOrderDetail USING @id;
-
-
+ 
 /*TASK 3
 create a stored procedure called CancelOrder. 
 Little Lemon want to use this stored procedure to delete an order record based on the user input of the order id.

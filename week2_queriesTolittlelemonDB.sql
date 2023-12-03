@@ -62,13 +62,13 @@ Here’s some guidance around completing this task:
     The inner query should check if any item quantity in the order table is more than 2. 
 */
 
-SELECT * FROM MEnu;
+SELECT * FROM Menu;
 
 WITH countorderspermenu AS 
 		(SELECT OrderID, COUNT(MenuID) AS totalorders
 		FROM Menu
 		GROUP BY OrderID
-		HAVING COUNT(MenuID) >2
+		HAVING COUNT(MenuID) >=2
 		),
 	menuidorderidtable AS 
 		(SELECT MenuID,
