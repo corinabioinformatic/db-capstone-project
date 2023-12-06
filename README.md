@@ -18,13 +18,13 @@ Once you have created the appropriate models, database schema, and completed the
 
 Your project is expected to include the following items:
 
-* Relevant diagrams and screenshots in PNG format.
+* Relevant diagrams and screenshots in PNG format. ([LittleLemonDB.png](https://github.com/corinabioinformatic/db-capstone-project/blob/main/LittleLemonDM.png) and [LittleLemon_tables_views_storedproc.png](https://github.com/corinabioinformatic/db-capstone-project/blob/main/LittleLemon_tables_views_storedproc.png))
 
-* The data model you produced in MySQL Workbench.
+* The data model you produced in MySQL Workbench[LittleLemonDB_withNoCascadeFK_v2.mwb](https://github.com/corinabioinformatic/db-capstone-project/blob/main/LittleLemonDB_withNoCascadeFK_v2.mwb). 
 
-* The SQL file of the Little Lemon database schema.
+* The SQL file of the Little Lemon database schema. To create use [LittleLemonDB_v1.sql](https://github.com/corinabioinformatic/db-capstone-project/blob/main/LittleLemonDB_v1.sql) and to fill use [createinsert_littlelemondb_v2.sql](https://github.com/corinabioinformatic/db-capstone-project/blob/main/createinsert_littlelemondb_v2.sql)
 
-* The workbook that includes all worksheets and dashboards.
+* The workbook that includes all worksheets and dashboards, in [tableau_capstone_week3.twb](https://github.com/corinabioinformatic/db-capstone-project/blob/main/tableau_capstone_week3.twb).
 
 
 How to Review
