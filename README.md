@@ -29,3 +29,30 @@ Your project is expected to include the following items:
 
 How to Review
 Once you have submitted your own application, you are required to evaluate two projects submitted by your peers.
+
+## Step by step (with screenshots)
+
+Here the screenshoots running the exercises, so you wont get lost while seting up and running the statements from the database:
+
+1. Examine the repository and locate the file LittleLemonDM.png. Does the image match the one provided below? See our [model](https://github.com/corinabioinformatic/db-capstone-project/blob/main/LittleLemonDM.png).
+
+
+
+2. The cloned repository contains a procedure called **GetMaxQuantity()**. Call this procedure and verify that the result of Max Quantity in Order is 5. [Here our result](https://github.com/corinabioinformatic/db-capstone-project/blob/main/GetMaxQuantity_result.png)
+
+3. Call the **ManageBooking()** procedure by passing the appropriate parameters. First with an available table number, then with one that has already been reserved. [Here our result](https://github.com/corinabioinformatic/db-capstone-project/blob/main/Call_ManageBooking_result.png) and [here](https://github.com/corinabioinformatic/db-capstone-project/blob/main/Call_ManageBooking2_result.png)
+
+4.Use the Python client to connect to the database and create an instance of a cursor object. Create an SQL statement that calls the **AddBooking()** procedure and passes the parameters:  BookingID=99, CustomerID=99, TableNumber=99, BookingDate=2022-12-10
+[Here our result](https://github.com/corinabioinformatic/db-capstone-project/blob/main/AddBooking99.png)
+
+5.Use the Python client to connect to the database and create an instance of a cursor object. Create a SQL statement that calls the **UpdateBooking()** procedure and pass the following parameters: [Here our results](https://github.com/corinabioinformatic/db-capstone-project/blob/main/Call_UpdateBooking99_result.png)
+
+6. Use the Python client to connect to the database and create an instance of a cursor object. Create a SQL statement that calls the **CancelBooking()** procedure and passes the following parameter:[Here our results](https://github.com/corinabioinformatic/db-capstone-project/blob/main/Call_CancelBooking99_13_result.png)
+
+
+Please don't forget to leave a feedback in the exercise peer-review. so I could improve for the next iteration. Many thanks!
+
+
+
+
+
