@@ -14,6 +14,7 @@ DROP PROCEDURE IF EXISTS AddBooking;
 
 DELIMITER //
 
+
 CREATE PROCEDURE AddBooking(
                                 IN inputcustomerid INT, -- IN inputbookingid INT,  we omit Booking ID because this table is autoincremental
                                 IN inputtablenumber INT, 

@@ -63,6 +63,48 @@ DELIMITER ;
 CALL CheckBooking('2022-11-12',3,@statusproc);
 SELECT @statusproc;
 
+
+
+/*Repeat the same, but this time will be called ManageBooking, instead of CheckBooking*/
+
+DROP PROCEDURE IF EXISTS ManageBooking;
+
+
+DELIMITER //
+
+CREATE PROCEDURE ManageBooking(IN daterepeated DATETIME, 
+								IN tablenumberrepeated INT,
+                                OUT statusout VARCHAR(100) 
+							  )
+BEGIN
+	IF (
+		SELECT TableNo FROM Bookings 
+        WHERE DateBooking = daterepeated 
+        AND TableNo = tablenumberrepeated
+    ) THEN
+		SET statusout = CONCAT('this table ',tablenumberrepeated,' is NOT available for your date');
+	ELSE
+		SET statusout = CONCAT('table ',tablenumberrepeated, ' is available for your date');
+	END IF;
+     
+END //
+
+DELIMITER ;
+
+
+CALL ManageBooking('2022-11-12',3,@statusproc);
+SELECT @statusproc;
+
+
+
+
+
+
+
+
+
+
+
 /* Task 3
 
 For your third and final task, Little Lemon need to:
